@@ -414,3 +414,30 @@ class Manager(object):
                             fanout_priority=priority_group,
                             operation_kwargs=operation_kwargs
                         )
+
+import networkx as nx
+
+from stream_framework.feeds.aggregated_feed.redis import RedisAggregatedFeed
+class UserRedisFeed(RedisFeed, UserBaseFeed):
+    key_format = 'user_feed:%(user_id)s'
+    max_length = 10
+
+class NewManager(Manager):
+
+    _G = nx.DiGraph()
+    user_feed_class = UserRedisFeed
+    feed_classes = dict(
+        normal=RedisFeed,
+        aggregated=RedisAggregatedFeed
+    )
+    def get_user_follower_ids(self, user_id):
+        ids = [neighbor for neighbor in self._G]
+        return {FanoutPriority.HIGH:ids}
+    def follow_many_users(self, user_id, target_ids, async=True):
+        for x in target_ids:
+            self._G.add_edge(user_id, x)
+        super(NewManager, self).follow_many_users(user_id, target_ids, async=async)
+    def unfollow_many_users(self, user_id, target_ids, async=True):
+        for x in target_ids:
+            self._G.remove_edge(user_id, x)
+        super(NewManager, self).unfollow_many_users(user_id, target_ids, async=async)
