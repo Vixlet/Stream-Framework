@@ -12,7 +12,7 @@
 STREAM_REDIS_CONFIG = {
     'default': {
         'host': '192.168.99.100',
-        'port': 32773,
+        'port': 32770,
         'db': 0,
         'password': None
     },
