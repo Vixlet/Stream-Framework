@@ -1,9 +1,18 @@
 
 # : we recommend that you connect to Redis via Twemproxy
+# STREAM_REDIS_CONFIG = {
+#     'default': {
+#         'host': '127.0.0.1',
+#         'port': 6379,
+#         'db': 0,
+#         'password': None
+#     },
+# }
+
 STREAM_REDIS_CONFIG = {
     'default': {
-        'host': '127.0.0.1',
-        'port': 6379,
+        'host': '192.168.99.100',
+        'port': 32773,
         'db': 0,
         'password': None
     },
