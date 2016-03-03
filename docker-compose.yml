@@ -1,0 +1,20 @@
+# redis container
+
+redis:
+  image: redis:3
+  ports:
+    - "32770:6379"
+
+web:
+  build: .
+  volumes:
+    - .:/app
+  links:
+    - redis:redis
+
+worker:
+  build: .
+  links:
+    - redis:redis
+  volumes:
+    - .:app
