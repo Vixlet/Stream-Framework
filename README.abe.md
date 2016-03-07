@@ -26,20 +26,30 @@ eventually ```docker-compose``` but also individual commands below
 
 
 ## build
+
+```
 docker build --tag streamframework .
+```
 
 ## web
-docker run -it --rm --streamframework stream-framework-flask.py
 
-## worker
-docker run -it --rm --streamframework 
+```
+docker run -d -p 5000:5000 --name sf-flask streamframework su -m myuser -c "./stream-framework-flask.py"
+```
+
+## worker (celery)
+
+```
+docker run -d  --name sf-celery streamframework su -m myuser -c "celery -A stream_framework.tasks worker -l debug --config celery"
+```
 
 ## run redis
+
 ```
-docker run -d -v /Users/abe.kazemzadeh/proj/redis/docker/ --name redis -p 32770:6379 redis
+docker run -d --name redis -v /Users/abe.kazemzadeh/proj/redis/docker/  -p 32770:6379 redis
 ```
 
-## run celery
+- sometimes this complains about not having a writable db file
 
 # config
 
