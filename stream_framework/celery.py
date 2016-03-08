@@ -4,14 +4,14 @@ import stream_framework.verbs.base
 
 ## Broker settings.
 #BROKER_URL = 'redis://localhost:6379'
-BROKER_URL = 'redis://192.168.99.100:32770'
+#BROKER_URL = 'redis://192.168.99.100:32770'
 
 # List of modules to import when celery starts.
 #CELERY_IMPORTS = ('myapp.tasks', )
 
 ## Using the database to store task state and results.
 #CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://192.168.99.100:32770'
+#CELERY_RESULT_BACKEND = 'redis://192.168.99.100:32770'
 
 CELERY_ANNOTATIONS = {'tasks.add': {'rate_limit': '10/s'}}
 
@@ -29,8 +29,10 @@ import celery
 #app = Celery('stream_framework')
 #app = celery.Celery('stream_framework.tasks', broker='redis://localhost/',
 #                    backend='redis://localhost:6379/')
-app = celery.Celery('stream_framework.tasks', broker='redis://192.168.99.100:32770/',
-                    backend='redis://192.168.99.100:32770/')
+#app = celery.Celery('stream_framework.tasks', broker='redis://192.168.99.100:32770/',
+#                    backend='redis://192.168.99.100:32770/')
+app = celery.Celery('stream_framework.tasks', broker='redis://redis',
+                    backend='redis://redis')
 
 
 # Using a string here means the worker will not have to
