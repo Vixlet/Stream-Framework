@@ -22,7 +22,7 @@ celery -A stream_framework.tasks worker -l debug --config celery
 
 # using docker
 
-eventually ```docker-compose``` but also individual commands below
+```docker-compose up```
 
 
 ## build
@@ -34,13 +34,13 @@ docker build --tag streamframework .
 ## web
 
 ```
-docker run -d -p 5000:5000 --name sf-flask streamframework su -m myuser -c "./stream-framework-flask.py"
+docker run -d -p 5000:5000 --name sf-flask --link redis streamframework su -m myuser -c "./stream-framework-flask.py"
 ```
 
 ## worker (celery)
 
 ```
-docker run -d  --name sf-celery streamframework su -m myuser -c "celery -A stream_framework.tasks worker -l debug --config celery"
+docker run -d  --name sf-celery --link redis streamframework su -m myuser -c "celery -A stream_framework.tasks worker -l debug --config celery"
 ```
 
 ## run redis
