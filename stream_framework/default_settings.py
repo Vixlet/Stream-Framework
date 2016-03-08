@@ -11,8 +11,8 @@
 
 STREAM_REDIS_CONFIG = {
     'default': {
-        'host': '192.168.99.100',
-        'port': 32770,
+        'host': 'redis', # set through docker run --link
+        'port': 6379,
         'db': 0,
         'password': None
     },
