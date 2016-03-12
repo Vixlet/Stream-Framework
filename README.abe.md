@@ -103,3 +103,15 @@ get key
 ```
 
 
+# getstream.io endpoints from Anup
+
+The following endpoints are being used:
+.connect
+.feed
+.get
+.followMany
+.addActivity
+.following
+.unfollow
+.follow
+.removeActivity
