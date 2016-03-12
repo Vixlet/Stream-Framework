@@ -1,10 +1,10 @@
-
+from stream_framework.default_settings import *
 try:
-    from django.conf import settings
+    from stream_framework.default_settings import *
     try:
         # ignore this if we already configured settings
-        settings.configure()
+        pass#settings.configure()
     except RuntimeError as e:
         pass
-except:
-    pass
+except Exception as e:
+    raise e

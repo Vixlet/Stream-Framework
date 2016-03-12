@@ -17,6 +17,7 @@ RUN python setup.py install
 
 # install python dependencies
 RUN pip install -r requirements.txt
+RUN pip install pytest mock
 
 # create unprivileged user
 RUN adduser --disabled-password --gecos '' myuser
