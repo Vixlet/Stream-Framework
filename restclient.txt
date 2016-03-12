@@ -1,0 +1,98 @@
+# -*- restclient -*-
+
+#
+# Test endpoints using restclient
+# Emacs Rocks http://emacsrocks.com/e15.html restclient
+#
+import stream
+client = stream.connect("5e62adrfbcxw", "qxshw6rvbgcv4ghb342fevzp75h53qhga8vajmd6s4pr6f7kcyfx72w5j693xe3t")
+f = client.feed('feed', "user_9_0_5600c2359e08b6b9653ce87e_my")
+f.get(offset=0,limit=2)
+#
+#  Current GetStream (commercial version) endpoints
+#
+#GET http://getstream.io/dashboard/explorer/8824/feed/capsule_55d7b76e59f0b89e4d4ba7b7_official/follows/
+#
+
+GET http://getstream.io/dashboard/api/8824/feed/feed/capsule_55d7b76e59f0b89e4d4ba7b7_official/following/
+{"limit":19,
+"offset":0}
+# 8824
+#5e62adrfbcxw
+#qxshw6rvbgcv4ghb342fevzp75h53qhga8vajmd6s4pr6f7kcyfx72w5j693xe3t
+
+GET https://api.getstream.io/api/8824/feed/feed/capsule_55d7b76e59f0b89e4d4ba7b7_official/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6ImZlZWRjYXBzdWxlXzU1ZDdiNzZlNTlmMGI4OWU0ZDRiYTdiN19vZmZpY2lhbCIsInJlc291cmNlIjoiZmVlZCJ9.YbY4tT6WBALfM7MBl7Cg0FCwn10GsSOiq4DdOjM9Ie0
+stream-auth-type: jwt
+
+#api_key: 5e62adrfbcxw
+
+
+GET https://api.getstream.io/api/8824/feed/feed/user_9_0_5600c2359e08b6b9653ce87e_unofficial/?api_key=5e62adrfbcxw&limit=2&offset=0
+Authorization: feeduser_9_0_5600c2359e08b6b9653ce87e_unofficial dLxnuNiMCl3a_rVvVPDVbgFp_7w
+stream-auth-type: jwt
+
+# sent to Kaushik
+GET https://api.getstream.io/api/v1.0/feed/feed/user_9_0_5600c2359e08b6b9653ce87e_unofficial/?api_key=5e62adrfbcxw
+X-Stream-Client: stream-python-client-2.3.5
+Content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6ImZlZWR1c2VyXzlfMF81NjAwYzIzNTllMDhiNmI5NjUzY2U4N2VfdW5vZmZpY2lhbCIsInJlc291cmNlIjoiZmVlZCJ9.rF3uOELVfVpupTWlC6i16DQqLgW71Hd7nBhnnDHSbnw
+X-Api-Key: 5e62adrfbcxw
+
+#
+#GET feed/feed/user_9_0_5600c2359e08b6b9653ce87e_unofficial/
+GET https://api.getstream.io/api/v1.0/feed/feed/user_9_0_5600c2359e08b6b9653ce87e_unofficial/?api_key=5e62adrfbcxw
+X-Stream-Client: stream-python-client-2.3.5
+Content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6ImZlZWR1c2VyXzlfMF81NjAwYzIzNTllMDhiNmI5NjUzY2U4N2VfdW5vZmZpY2lhbCIsInJlc291cmNlIjoiZmVlZCJ9.rF3uOELVfVpupTWlC6i16DQqLgW71Hd7nBhnnDHSbnw
+X-Api-Key: 5e62adrfbcxw
+Date: Fri, 11 Mar 2016 01:17:02 GMT
+stream-auth-type: jwt
+#Authorization: Signature keyId="hmac-key-1",algorithm="hmac-sha1",signature="Base64(HMAC-SHA1(signing string))"
+#X-Stream-Client: 'stream-python-client-2.3.5'
+#Content-type': 'application/json'
+
+# Works!
+GET https://api.getstream.io/api/v1.0/feed/feed/user_9_0_5600c2359e08b6b9653ce87e_unofficial/?api_key=5e62adrfbcxw
+X-Stream-Client: stream-python-client-2.3.5
+Content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY3Rpb24iOiJyZWFkIiwiZmVlZF9pZCI6ImZlZWR1c2VyXzlfMF81NjAwYzIzNTllMDhiNmI5NjUzY2U4N2VfdW5vZmZpY2lhbCIsInJlc291cmNlIjoiZmVlZCJ9.rF3uOELVfVpupTWlC6i16DQqLgW71Hd7nBhnnDHSbnw
+X-Api-Key: 5e62adrfbcxw
+stream-auth-type: jwt
+#  This is the first dummy endpoint of the vixlet stream framework
+GET http://192.168.99.100:5000/user/1/feed
+User-Agent: Emacs Restclient
+
+#
+# XML is supported - highlight, pretty-print
+#
+GET http://www.redmine.org/issues.xml?limit=10
+
+#
+# A bit of json GET, you can pass headers too
+#
+GET http://jira.atlassian.com/rest/api/latest/issue/JRA-9
+User-Agent: Emacs24
+Accept-Encoding: compress, gzip
+
+#
+# Post works too, entity just goes after an empty line. Same is for PUT.
+#
+POST https://jira.atlassian.com/rest/api/2/search
+Content-Type: application/json
+
+{
+    "jql": "project = HSP",
+    "startAt": 0,
+    "maxResults": 15,
+    "fields": [
+	"summary",
+	"status",
+	"assignee"
+    ]
+}
+
+#
+# And delete, will return not-found error...
+#
+DELETE https://jira.atlassian.com/rest/api/2/version/20
