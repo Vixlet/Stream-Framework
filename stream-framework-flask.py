@@ -2,6 +2,7 @@
 # implement your feed with redis as storage
 from collections import namedtuple
 import datetime
+import re
 #import celeryconfig
 #from celeryconfig import *
 #import celery
@@ -131,11 +132,25 @@ class VixletUserFeed(Resource):
         output = map(activity2dict, feed[:])
         #import pdb; pdb.set_trace()
         return output
-    
+
+class VixletFeed(Resource):
+    def get(self, feed_id):
+        #m = re.match(r"(?P<prefix>[^_]+)_(?P<domain_id>[^_]+)_(?P<subworld_id>[^_]+)_(?P<user_id>[^_]+)_(?P<qualifier>[^_]*)", feed_id)
+        #print m.group('prefix'), m.group('domain_id'), \
+            #m.group('subworld_id'), m.group('userid'), \
+            #m.group('qualifier')
+        print feed_id
+        #feed = manager.user_feed_class(feed_id)
+        #output = map(activity2dict, feed[:])
+        #import pdb; pdb.set_trace()
+        output = {u'duration': u'18ms', u'results': [{u'origin': u'feed:capsule_55dd08a6355b5bbc1f108ee7_official', u'target': None, u'object': u'24iqNvsZDzJ', u'actor': u'5593481a43bbff4f77bf75a2', u'to': [], u'verb': u'posted', u'capsule_id': u'55dd08a6355b5bbc1f108ee7', u'time': datetime.datetime(2016, 2, 10, 2, 35, 36, 184889).isoformat(), u'foreign_id': u'24iqNvsZDzJ', u'id': u'f715c23a-cf9e-11e5-8080-80014e0979e1'}], u'next': u'/api/v1.0/feed/feed/user_9_0_5600c2359e08b6b9653ce87e_official/?id_lt=f715c23a-cf9e-11e5-8080-80014e0979e1&api_key=5e62adrfbcxw&limit=1&offset=0'}
+        return output
+    #return feed_id
     
 api.add_resource(VixletUserFeed, '/user/<int:user_id>/feed')
-
+#api.add_resource(VixletUserFeed, '/api/v1.0/feed/feed/user_<int:domain_id>_<int:subworld_id>_<user_id>_<stream_qualifier>')
+api.add_resource(VixletFeed, '/api/v1.0/feed/feed/<feed_id>/')
 
 if __name__ == '__main__':
-    #app.run(debug=True)
-    app.run(host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
+    #app.run(host='0.0.0.0')
