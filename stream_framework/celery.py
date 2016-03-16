@@ -33,6 +33,7 @@ import celery
 #                    backend='redis://192.168.99.100:32770/')
 app = celery.Celery('stream_framework.tasks', broker='redis://redis',
                     backend='redis://redis')
+current_app = app  # for test suite
 
 
 # Using a string here means the worker will not have to
