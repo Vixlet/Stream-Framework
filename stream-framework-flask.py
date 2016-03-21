@@ -6,9 +6,6 @@ logging.basicConfig(level=logging.DEBUG)
 from collections import namedtuple
 import datetime
 import re
-#import celeryconfig
-#from celeryconfig import *
-#import celery
 from stream_framework.feeds.redis import RedisFeed
 from stream_framework.feeds.base import UserBaseFeed
 from stream_framework.feed_managers.base import Manager, FanoutPriority, NewManager
@@ -16,8 +13,6 @@ from stream_framework.verbs.base import Follow, Comment, Love, Add, Verb
 from stream_framework.activity import Activity
 from stream_framework.feed_managers.base import add_operation
 from stream_framework.feeds.aggregated_feed.redis import RedisAggregatedFeed
-#app = celery.Celery('stream_framework.tasks', broker='redis://localhost/',
-#                    backend='redis://localhost:6379/')
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 
@@ -210,8 +205,6 @@ class VixletFeed(Resource):
         class ActivityCache(ShardedHashCache): key_format = 'activity:cache:%s'
         cache = ActivityCache(feed.activity_storage.options.get('key', 'normal'))
         output = cache.get_many(activity_ids)
-        #import pdb; pdb.set_trace()
-        #output = {u'duration': u'18ms', u'results': [{u'origin': u'feed:capsule_55dd08a6355b5bbc1f108ee7_official', u'target': None, u'object': u'24iqNvsZDzJ', u'actor': u'5593481a43bbff4f77bf75a2', u'to': [], u'verb': u'posted', u'capsule_id': u'55dd08a6355b5bbc1f108ee7', u'time': datetime.datetime(2016, 2, 10, 2, 35, 36, 184889).isoformat(), u'foreign_id': u'24iqNvsZDzJ', u'id': u'f715c23a-cf9e-11e5-8080-80014e0979e1'}], u'next': u'/api/v1.0/feed/feed/user_9_0_5600c2359e08b6b9653ce87e_official/?id_lt=f715c23a-cf9e-11e5-8080-80014e0979e1&api_key=5e62adrfbcxw&limit=1&offset=0'}
         res = {"results": output,
                "duration": 0,
                "next": ""}

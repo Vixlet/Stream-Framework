@@ -18,6 +18,15 @@ STREAM_REDIS_CONFIG = {
     },
 }
 
+# STREAM_REDIS_CONFIG = {
+#     'default': {
+#         'host': '192.168.99.100', # for testing
+#         'port': 32770,
+#         'db': 0,
+#         'password': None
+#     },
+# }
+
 STREAM_CASSANDRA_HOSTS = ['localhost']
 
 STREAM_DEFAULT_KEYSPACE = 'stream_framework'
