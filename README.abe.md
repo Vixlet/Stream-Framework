@@ -115,3 +115,13 @@ The following endpoints are being used:
 .unfollow
 .follow
 .removeActivity
+
+# running tests
+
+right now I had to manually edit the redis settings to test and
+comment out cassandra related tests
+
+```
+py.test -sl --tb=short
+stream_framework/tests
+```
