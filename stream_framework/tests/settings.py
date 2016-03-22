@@ -12,7 +12,7 @@ stream_framework_CASSANDRA_CONSITENCY_LEVEL = 'ONE'
 
 stream_framework_REDIS_CONFIG = {
     'default': {
-        'host': '127.0.0.1',
+        'host': 'redis',
         'port': 6379,
         'db': 0,
         'password': None

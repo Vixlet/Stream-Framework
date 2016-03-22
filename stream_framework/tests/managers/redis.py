@@ -16,6 +16,6 @@ class RedisManager(Manager):
     user_feed_class = RedisUserBaseFeed
 
 
-@pytest.mark.usefixtures("redis_reset")
+#@pytest.mark.usefixtures("redis_reset")
 class RedisManagerTest(BaseManagerTest):
     manager_class = RedisManager

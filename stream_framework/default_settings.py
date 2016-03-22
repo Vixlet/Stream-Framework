@@ -1,7 +1,7 @@
 
 # : we recommend that you connect to Redis via Twemproxy
-# STREAM_REDIS_CONFIG = {
-#     'default': {
+#STREAM_REDIS_CONFIG = {
+#    'default': {
 #         'host': '127.0.0.1',
 #         'port': 6379,
 #         'db': 0,
@@ -10,7 +10,7 @@
 # }
 
 STREAM_REDIS_CONFIG = {
-    'default': {
+   'default': {
         'host': 'redis', # set through docker run --link
         'port': 6379,
         'db': 0,
@@ -18,16 +18,7 @@ STREAM_REDIS_CONFIG = {
     },
 }
 
-# STREAM_REDIS_CONFIG = {
-#     'default': {
-#         'host': '192.168.99.100', # for testing
-#         'port': 32770,
-#         'db': 0,
-#         'password': None
-#     },
-# }
-
-STREAM_CASSANDRA_HOSTS = ['localhost']
+STREAM_CASSANDRA_HOSTS = ['cass']
 
 STREAM_DEFAULT_KEYSPACE = 'stream_framework'
 
