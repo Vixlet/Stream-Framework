@@ -15,7 +15,8 @@ itsdangerous==0.24
 kombu==3.0.33
 networkx==1.11
 python-dateutil==2.5.0
-pytz==2015.7
+#pytz==2015.7
+pytz==2016.1
 redis==2.10.5
 six==1.10.0
 stream-framework==1.3.2
