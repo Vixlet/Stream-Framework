@@ -21,3 +21,11 @@ class AggregatedActivity(BaseActivity):
     created_at = columns.DateTime(required=False)
     group = columns.Ascii(required=False)
     updated_at = columns.DateTime(required=False)
+
+class VixletActivity(BaseActivity):
+    actor = columns.Ascii(required=False)
+    object = columns.Ascii(required=False)
+    capsule = columns.Ascii(required=False)
+    time = columns.DateTime(required=False)
+    verb = columns.Ascii(required=False)
+    extra_context = columns.Bytes(required=False)

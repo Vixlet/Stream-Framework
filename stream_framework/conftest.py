@@ -25,3 +25,16 @@ def cassandra_reset():
     timeline = CassandraFeed.get_timeline_storage()
     sync_table(aggregated_timeline.model)
     sync_table(timeline.model)
+
+
+@pytest.fixture
+def cassandra_vixlet():
+    from stream_framework.feeds.cassandra import CassandraFeed, VixletCassandraFeed
+    from stream_framework.feeds.aggregated_feed.cassandra import CassandraAggregatedFeed
+    from cassandra.cqlengine.management import create_keyspace_simple, sync_table
+    from stream_framework import settings
+    create_keyspace_simple(settings.STREAM_DEFAULT_KEYSPACE, 1)
+    aggregated_timeline = CassandraAggregatedFeed.get_timeline_storage()
+    timeline = VixletCassandraFeed.get_timeline_storage()
+    sync_table(aggregated_timeline.model)
+    sync_table(timeline.model)
