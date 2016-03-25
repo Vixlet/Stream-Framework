@@ -4,6 +4,11 @@ from stream_framework.storage.cassandra.timeline_storage import CassandraTimelin
 from stream_framework.tests.storage.base import TestBaseTimelineStorageClass
 from stream_framework.activity import Activity
 from stream_framework.storage.cassandra import models
+from stream_framework.verbs.base import Love as PinVerb
+from stream_framework.tests.utils import FakeActivity, VixletFakeActivity, Pin
+from stream_framework.utils import get_metrics_instance
+import datetime
+import six
 
 
 @pytest.mark.usefixtures("cassandra_reset")
@@ -29,8 +34,16 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
     storage_options = {
         'hosts': settings.STREAM_CASSANDRA_HOSTS,
         'column_family_name': 'vixlet_timeline',
-        'activity_class': Activity
+        'activity_class': VixletFakeActivity
     }
+    metrics = get_metrics_instance()
+
+    def _build_activity_list(self, ids_list):
+        now = datetime.datetime.now()
+        pins = [Pin(id=i, created_at=now + datetime.timedelta(hours=i))
+                for i in ids_list]
+        pins_ids = zip(pins, ids_list)
+        return [VixletFakeActivity(str(i), PinVerb, str(pin.id), None, now + datetime.timedelta(hours=i), {'i': i}) for pin, i in pins_ids]
 
     def test_union_set_slice(self):
         # activities = self._build_activity_list(range(42, 0, -1))
@@ -129,18 +142,17 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         pass
 
     def test_add_many(self):
-        # results = self.storage.get_slice(self.test_key, 0, None)
-        # # make sure no data polution
-        # assert results == []
-        # activities = self._build_activity_list(range(3, 0, -1))
-        # self.storage.add_many(self.test_key, activities)
-        # results = self.storage.get_slice(self.test_key, 0, None)
-        # self.assert_results(results, activities)
-        pass
+        results = self.storage.get_slice(self.test_key, 0, None)
+        # make sure no data polution
+        assert results == []
+        activities = self._build_activity_list(range(3, 0, -1))
+        self.storage.add_many(self.test_key, activities)
+        #self.add_many(self.test_key, activities)
+        results = self.storage.get_slice(self.test_key, 0, None)
+        self.assert_results(results, activities)
 
 
     def test_custom_timeline_model(self):
-        import pdb; pdb.set_trace()
         CustomModel = type('custom', (models.VixletActivity,), {})
         custom_storage_options = self.storage_options.copy()
         custom_storage_options['modelClass'] = CustomModel

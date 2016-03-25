@@ -40,10 +40,10 @@ class VixletCassandraActivitySerializer(CassandraActivitySerializer):
         self.check_type(activity)
         return self.model(
             activity_id=long_t(activity.serialization_id),
-            actor=activity.actor_id,
+            actor=activity.actor,
             time=activity.time,
             verb=activity.verb,
-            object=activity.object_id,
+            object=activity.object,
             extra_context=pickle.dumps(activity.extra_context)
         )
 
