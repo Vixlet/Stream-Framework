@@ -22,10 +22,13 @@ class AggregatedActivity(BaseActivity):
     group = columns.Ascii(required=False)
     updated_at = columns.DateTime(required=False)
 
-class VixletActivity(BaseActivity):
+class VixletActivity(Model):
+    feed_id = columns.Ascii(primary_key=True, partition_key=True)
+    activity_id = columns.Ascii(primary_key=True,
+                                clustering_order='desc')
     actor = columns.Ascii(required=False)
     object = columns.Ascii(required=False)
     capsule = columns.Ascii(required=False)
     time = columns.DateTime(required=False)
     verb = columns.Ascii(required=False)
-    extra_context = columns.Bytes(required=False)
+    #extra_context = columns.Bytes(required=False)

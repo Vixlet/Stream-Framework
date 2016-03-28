@@ -1,10 +1,10 @@
-from stream_framework.activity import Activity, AggregatedActivity
+from stream_framework.activity import Activity, AggregatedActivity, VixletActivity
 import six
 
 class FakeActivity(Activity):
     pass
 
-class VixletFakeActivity(Activity):
+class VixletFakeActivity(VixletActivity):
 
     def __init__(self, actor, verb, object, target=None, time=None, extra_context=None):
         self.verb = verb

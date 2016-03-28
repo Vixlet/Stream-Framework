@@ -6,7 +6,7 @@ from cassandra.cqlengine.connection import execute
 from cassandra.cqlengine.query import BatchQuery
 from stream_framework.storage.base import BaseTimelineStorage
 from stream_framework.storage.cassandra import models
-from stream_framework.serializers.cassandra.activity_serializer import CassandraActivitySerializer
+from stream_framework.serializers.cassandra.activity_serializer import CassandraActivitySerializer, VixletCassandraActivitySerializer
 from stream_framework.utils import memoized
 import logging
 
@@ -210,3 +210,15 @@ class CassandraTimelineStorage(BaseTimelineStorage):
         for activity in query.order_by(*ordering).limit(limit):
             results.append([activity.activity_id, activity])
         return results
+
+class VixletCassandraTimelineStorage(CassandraTimelineStorage):
+
+    """
+    A feed timeline implementation that uses Apache Cassandra 2.0 for storage.
+
+    CQL3 is used to access the data stored on Cassandra via the ORM
+    library CqlEngine.
+
+    """
+
+    default_serializer_class = VixletCassandraActivitySerializer

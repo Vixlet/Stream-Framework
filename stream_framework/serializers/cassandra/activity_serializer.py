@@ -35,16 +35,17 @@ class CassandraActivitySerializer(BaseSerializer):
         return self.activity_class(**activity_kwargs)
 
 class VixletCassandraActivitySerializer(CassandraActivitySerializer):
-
+ 
     def dumps(self, activity):
         self.check_type(activity)
+        #import pdb; pdb.set_trace()
         return self.model(
-            activity_id=long_t(activity.serialization_id),
+            activity_id=activity.serialization_id,
             actor=activity.actor,
             time=activity.time,
             verb=activity.verb,
-            object=activity.object,
-            extra_context=pickle.dumps(activity.extra_context)
+            object=activity.object
+            #extra_context=pickle.dumps(activity.extra_context)
         )
 
     def loads(self, serialized_activity):

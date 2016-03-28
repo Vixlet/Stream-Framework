@@ -429,3 +429,24 @@ class NotificationActivity(AggregatedActivity):
         self.is_seen = False
         self.is_read = False
 
+class VixletActivity(Activity):
+
+    '''
+    For storing vixlet's activities.
+    
+    for now trying to convert objects into strings.
+    '''
+    @property
+    def serialization_id(self):
+        '''
+        messing around with the serialization id to allow strings
+        in the object and verb ids
+        '''
+        if not self.time:
+            raise TypeError('Cant serialize activities without a time')
+        milliseconds = str(int(datetime_to_epoch(self.time) * 1000))
+        serialization_id_str = '%s_%s_%s' % (
+            milliseconds, self.object_id, self.verb.id)
+        serialization_id = serialization_id_str
+        return serialization_id
+

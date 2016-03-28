@@ -277,3 +277,5 @@ class TestBaseTimelineStorageClass(unittest.TestCase):
         self.assert_results(s6, activities[1:])
         # check intersections
         assert len(set(s1 + s2)) == len(s1) + len(s2)
+
+
