@@ -50,7 +50,8 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         pins = [Pin(id=i, created_at=now + datetime.timedelta(hours=i))
                 for i in ids_list]
         pins_ids = zip(pins, ids_list)
-        return [VixletFakeActivity(str(i), PinVerb, str(pin.id), None, now + datetime.timedelta(hours=i), {'i': i}) for pin, i in pins_ids]
+        #return [VixletFakeActivity(str(i), PinVerb, str(pin.id), None, now + datetime.timedelta(hours=i), {'i': i}) for pin, i in pins_ids]
+        return [VixletFakeActivity("Abe", str(PinVerb), str(pin.id)) for pin, i in pins_ids]
 
     def test_union_set_slice(self):
         # activities = self._build_activity_list(range(42, 0, -1))
@@ -153,15 +154,14 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         # make sure no data polution
         assert results == []
         activities = self._build_activity_list(range(3, 0, -1))
+        #import pdb; pdb.set_trace()
         self.storage.add_many(self.test_key, activities)
-        #results = self.storage.get_slice(self.test_key, 0, None)
-        #self.assert_results(results, activities)
+        results = self.storage.get_slice(self.test_key, 0, None)
+        self.assert_results(results, activities)
         #pass
-    
+
     def test_remove_missing(self):
         #activities = self._build_activity_list(range(10))
         #self.storage.remove(self.test_key, activities[1])
         #self.storage.remove_many(self.test_key, activities[1:2])
         pass
-    
-

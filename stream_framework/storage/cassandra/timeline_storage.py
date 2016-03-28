@@ -222,3 +222,10 @@ class VixletCassandraTimelineStorage(CassandraTimelineStorage):
     """
 
     default_serializer_class = VixletCassandraActivitySerializer
+
+    def __init__(self, serializer_class=None, modelClass=models.VixletActivity, **options):
+        self.column_family_name = options.pop('column_family_name')
+        self.base_model = modelClass
+        super(CassandraTimelineStorage, self).__init__(
+            serializer_class, **options)
+        self.model = self.get_model(self.base_model, self.column_family_name)

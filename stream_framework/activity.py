@@ -446,7 +446,13 @@ class VixletActivity(Activity):
             raise TypeError('Cant serialize activities without a time')
         milliseconds = str(int(datetime_to_epoch(self.time) * 1000))
         serialization_id_str = '%s_%s_%s' % (
-            milliseconds, self.object_id, self.verb.id)
+            milliseconds, self.object_id, self.verb)
+        #milliseconds, self.object_id, self.verb.id)
         serialization_id = serialization_id_str
         return serialization_id
 
+    def __repr__(self):
+        class_name = self.__class__.__name__
+        message = '%s(%s) %s %s' % (class_name,
+                                    str(self.verb), self.actor_id, self.object_id)
+        return message
