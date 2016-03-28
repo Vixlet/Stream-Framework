@@ -58,6 +58,7 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         # self.storage.add_many(self.test_key, activities)
         # assert self.storage.count(self.test_key) == 42
         # s1 = self.storage.get_slice(self.test_key, 0, 21)
+        # import pdb; pdb.set_trace()
         # self.assert_results(s1, activities[0:21])
         # s2 = self.storage.get_slice(self.test_key, 22, 42)
         # self.assert_results(s2, activities[22:42])
@@ -79,6 +80,7 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         # self.storage.add_many(self.test_key, activities[:5])
         # assert self.storage.count(self.test_key) == 10
         # self.storage.trim(self.test_key, 5)
+        # import pdb; pdb.set_trace()
         # assert self.storage.count(self.test_key) == 5
         # results = self.storage.get_slice(self.test_key, 0, None)
         # self.assert_results(
@@ -91,21 +93,22 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         # self.storage.trim(self.test_key, 5)
         # self.storage.add_many(self.test_key, activities)
         # results = self.storage.get_slice(self.test_key, 0, 5)
+        # import pdb; pdb.set_trace()
         # self.assert_results(results, activities[:5])
         pass
 
     def test_noop_trim(self):
-        # activities = self._build_activity_list(range(10, 0, -1))
-        # self.storage.add_many(self.test_key, activities)
-        # assert self.storage.count(self.test_key) == 10
-        # self.storage.trim(self.test_key, 12)
-        # assert self.storage.count(self.test_key) == 10
-        pass
+        activities = self._build_activity_list(range(10, 0, -1))
+        self.storage.add_many(self.test_key, activities)
+        assert self.storage.count(self.test_key) == 10
+        self.storage.trim(self.test_key, 12)
+        assert self.storage.count(self.test_key) == 10
 
     def test_index_of(self):
         # activities = self._build_activity_list(range(1, 43))
         # activity_ids = [a.serialization_id for a in activities]
         # self.storage.add_many(self.test_key, activities)
+        # import pdb; pdb.set_trace()
         # assert self.storage.index_of(self.test_key, activity_ids[41]) == 0
         # assert self.storage.index_of(self.test_key, activity_ids[7]) == 34
         # with self.assertRaises(ValueError):
@@ -113,23 +116,21 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         pass
 
     def test_count_insert(self):
-        # assert self.storage.count(self.test_key) == 0
-        # activity = self._build_activity_list([1])[0]
-        # self.storage.add(self.test_key, activity)
-        # assert self.storage.count(self.test_key) == 1
-        pass
+        assert self.storage.count(self.test_key) == 0
+        activity = self._build_activity_list([1])[0]
+        self.storage.add(self.test_key, activity)
+        assert self.storage.count(self.test_key) == 1
 
     def test_contains(self):
-        # activities = self._build_activity_list(range(4, 0, -1))
-        # self.storage.add_many(self.test_key, activities[:3])
-        # results = self.storage.get_slice(self.test_key, 0, None)
-        # if self.storage.contains:
-        #     self.assert_results(results, activities[:3])
-        #     for a in activities[:3]:
-        #         assert self.storage.contains(self.test_key, a.serialization_id)
-        #     assert not self.storage.contains(
-        #         self.test_key, activities[3].serialization_id)
-        pass
+        activities = self._build_activity_list(range(4, 0, -1))
+        self.storage.add_many(self.test_key, activities[:3])
+        results = self.storage.get_slice(self.test_key, 0, None)
+        if self.storage.contains:
+            self.assert_results(results, activities[:3])
+            for a in activities[:3]:
+                assert self.storage.contains(self.test_key, a.serialization_id)
+            assert not self.storage.contains(
+                self.test_key, activities[3].serialization_id)
 
     def test_add_remove(self):
         # assert self.storage.count(self.test_key) == 0
@@ -138,6 +139,7 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         # self.storage.remove_many(self.test_key, activities[5:])
         # results = self.storage.get_slice(self.test_key, 0, 20)
         # assert self.storage.count(self.test_key) == 5
+        # import pdb; pdb.set_trace()
         # self.assert_results(results, activities[:5])
         pass
 
@@ -146,6 +148,7 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         #     list(range(3, 0, -1)) + list(range(3, 0, -1)))
         # self.storage.add_many(self.test_key, activities)
         # results = self.storage.get_slice(self.test_key, 0, None)
+        # import pdb; pdb.set_trace()
         # self.assert_results(results, activities[:3])
         pass
 
@@ -154,14 +157,11 @@ class TestVixletCassandraTimelineStorage(TestBaseTimelineStorageClass):
         # make sure no data polution
         assert results == []
         activities = self._build_activity_list(range(3, 0, -1))
-        #import pdb; pdb.set_trace()
         self.storage.add_many(self.test_key, activities)
         results = self.storage.get_slice(self.test_key, 0, None)
         self.assert_results(results, activities)
-        #pass
 
     def test_remove_missing(self):
-        #activities = self._build_activity_list(range(10))
-        #self.storage.remove(self.test_key, activities[1])
-        #self.storage.remove_many(self.test_key, activities[1:2])
-        pass
+        activities = self._build_activity_list(range(10))
+        self.storage.remove(self.test_key, activities[1])
+        self.storage.remove_many(self.test_key, activities[1:2])
